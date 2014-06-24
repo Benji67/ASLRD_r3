@@ -3,10 +3,11 @@
 @{
     ViewBag.Title = "Restaurant";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string cityname = Request.Params["cityname"];
 }
 
 <div></div>
-<h2>Liste des restaurants pour la ville de @ViewData["cityname"]</h2>
+<h2>Liste des restaurants pour la ville de @(Request.Params["cityname"])</h2>
 
 <table id="grid-restaurant">
     <tr>
@@ -33,7 +34,7 @@
                 @Html.DisplayFor(modelItem => item.genre)
             </td>
             <td>
-                @Html.ActionLink("La carte", "GetProduit", new { restaurantID = @item.restaurantID })
+                @Html.ActionLink("La carte", "GetProduit", new { restaurantID = @item.restaurantID, restaurantname = @item.nom, cityname = @cityname }, null)
             </td>
         </tr>
     }

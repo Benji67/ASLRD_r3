@@ -65,7 +65,7 @@ namespace ASLRD_r3.Controllers
         [HandleError]
         public ActionResult GetRestaurant(string cityname)
         {
-            var listecommentaire = (from c in db.commentaire select c).ToList();    
+            var listecommentaire = (from c in db.commentaire select c).ToList();
 
             if (string.IsNullOrEmpty(cityname))
             {
@@ -85,8 +85,7 @@ namespace ASLRD_r3.Controllers
                     return View("Adresse", listecommentaire);
                 }
                 else
-                {
-                    ViewData["cityname"] = Request.Params["cityname"];
+                {                    
                     return View("Restaurant", listerestaurant);
                 }
             }
@@ -108,9 +107,7 @@ namespace ASLRD_r3.Controllers
                 return View("Restaurant");
             }
             else
-            {
-                ViewData["cityname"] = Request.Params["cityname"];
-                //ViewData["restaurantname"] = GetrestaurantnamebyRestaurantID(RestaurantID);
+            {                
                 return View("Produit", listeproduit);
             }
         }

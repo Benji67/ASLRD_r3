@@ -6,7 +6,7 @@
 }
 
 <div></div>
-<h2>Liste des produits pour le restaurant xxx de la ville de @ViewData["cityname"]</h2>
+<h2>Liste des produits pour le restaurant @(Request.Params["restaurantname"]) de @(Request.Params["cityname"])</h2>
 
 <table>
     <tr>
