@@ -1,0 +1,1340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DataBaseASLRDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="adresse">
+          <Key>
+            <PropertyRef Name="adresseID" />
+          </Key>
+          <Property Name="adresseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ville" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="rue" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="codepostal" Type="int" Nullable="false" />
+          <Property Name="clientID" Type="nvarchar" MaxLength="50" />
+          <Property Name="restaurantID" Type="int" />
+        </EntityType>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="clientID" />
+          </Key>
+          <Property Name="clientID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="motdepasse" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="prenom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="telephone" Type="int" />
+          <Property Name="status" Type="nvarchar" MaxLength="10" />
+          <Property Name="genre" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="commande">
+          <Key>
+            <PropertyRef Name="commandeID" />
+          </Key>
+          <Property Name="commandeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="prixtotal" Type="smallmoney" Nullable="false" />
+          <Property Name="fraisdelivraison" Type="smallmoney" />
+          <Property Name="reduction" Type="float" />
+          <Property Name="datecommande" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="etatcommande" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="commentaire">
+          <Key>
+            <PropertyRef Name="commentaireID" />
+          </Key>
+          <Property Name="commentaireID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="commentaire" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="note" Type="int" />
+          <Property Name="datecommentaire" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="restaurantID" Type="int" />
+          <Property Name="clientID" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="commentaire_menu">
+          <Key>
+            <PropertyRef Name="commentaireID" />
+            <PropertyRef Name="menuID" />
+          </Key>
+          <Property Name="commentaireID" Type="int" Nullable="false" />
+          <Property Name="menuID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="commentaire_produit">
+          <Key>
+            <PropertyRef Name="commentaireID" />
+            <PropertyRef Name="produitID" />
+          </Key>
+          <Property Name="commentaireID" Type="int" Nullable="false" />
+          <Property Name="produitID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="detailcommande">
+          <Key>
+            <PropertyRef Name="detailcommandeID" />
+          </Key>
+          <Property Name="detailcommandeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="quantitee" Type="int" Nullable="false" />
+          <Property Name="reduction" Type="float" />
+          <Property Name="datedetailcommande" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="clientID" Type="nvarchar" MaxLength="50" />
+          <Property Name="restaurantID" Type="int" Nullable="false" />
+          <Property Name="commandeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="detailcommande_menu">
+          <Key>
+            <PropertyRef Name="detailcommandeID" />
+            <PropertyRef Name="menuID" />
+          </Key>
+          <Property Name="detailcommandeID" Type="int" Nullable="false" />
+          <Property Name="menuID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="detailcommande_produit">
+          <Key>
+            <PropertyRef Name="detailcommandeID" />
+            <PropertyRef Name="produitID" />
+          </Key>
+          <Property Name="detailcommandeID" Type="int" Nullable="false" />
+          <Property Name="produitID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="detailcommandetmp">
+          <Key>
+            <PropertyRef Name="detailcommandetmpID" />
+          </Key>
+          <Property Name="detailcommandetmpID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sessionID" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="quantitee" Type="int" Nullable="false" />
+          <Property Name="reduction" Type="float" />
+          <Property Name="datedetailcommande" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="restaurantID" Type="int" Nullable="false" />
+          <Property Name="commandeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="detailcommandetmp_menu">
+          <Key>
+            <PropertyRef Name="detailcommandetmpID" />
+            <PropertyRef Name="menuID" />
+          </Key>
+          <Property Name="detailcommandetmpID" Type="int" Nullable="false" />
+          <Property Name="menuID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="detailcommandetmp_produit">
+          <Key>
+            <PropertyRef Name="detailcommandetmpID" />
+            <PropertyRef Name="produitID" />
+          </Key>
+          <Property Name="detailcommandetmpID" Type="int" Nullable="false" />
+          <Property Name="produitID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ingredient">
+          <Key>
+            <PropertyRef Name="ingredientID" />
+          </Key>
+          <Property Name="ingredientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="quantite" Type="float" />
+          <Property Name="description" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="ingredient_produit">
+          <Key>
+            <PropertyRef Name="ingredientID" />
+            <PropertyRef Name="produitID" />
+          </Key>
+          <Property Name="ingredientID" Type="int" Nullable="false" />
+          <Property Name="produitID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="menu">
+          <Key>
+            <PropertyRef Name="menuID" />
+          </Key>
+          <Property Name="menuID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="prixmenu" Type="smallmoney" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="30" />
+          <Property Name="delais" Type="time" Precision="7" />
+          <Property Name="reduction" Type="float" />
+          <Property Name="restaurantID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="menu_produit">
+          <Key>
+            <PropertyRef Name="menuID" />
+            <PropertyRef Name="produitID" />
+          </Key>
+          <Property Name="menuID" Type="int" Nullable="false" />
+          <Property Name="produitID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ouverture">
+          <Key>
+            <PropertyRef Name="ouvertureID" />
+          </Key>
+          <Property Name="ouvertureID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="jour" Type="nvarchar" MaxLength="8" Nullable="false" />
+          <Property Name="heure_douverture" Type="time" Precision="7" Nullable="false" />
+          <Property Name="heure_de_fermeture" Type="time" Precision="7" Nullable="false" />
+          <Property Name="jour_ferme" Type="date" />
+          <Property Name="restaurantID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="produit">
+          <Key>
+            <PropertyRef Name="produitID" />
+          </Key>
+          <Property Name="produitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="prixproduit" Type="smallmoney" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="30" />
+          <Property Name="delais" Type="time" Precision="7" />
+          <Property Name="reduction" Type="float" />
+          <Property Name="restaurantID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="restaurant">
+          <Key>
+            <PropertyRef Name="restaurantID" />
+          </Key>
+          <Property Name="restaurantID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="motdepasse" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="telephone" Type="int" />
+          <Property Name="status" Type="nvarchar" MaxLength="10" />
+          <Property Name="genre" Type="nvarchar" MaxLength="30" />
+          <Property Name="nsiret" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_adresse1">
+          <End Role="client" Type="Self.client" Multiplicity="0..1" />
+          <End Role="adresse" Type="Self.adresse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="clientID" />
+            </Principal>
+            <Dependent Role="adresse">
+              <PropertyRef Name="clientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_adresse2">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="0..1" />
+          <End Role="adresse" Type="Self.adresse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="restaurantID" />
+            </Principal>
+            <Dependent Role="adresse">
+              <PropertyRef Name="restaurantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_commande_menu1">
+          <End Role="menu" Type="Self.menu" Multiplicity="1" />
+          <End Role="detailcommande_menu" Type="Self.detailcommande_menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="menu">
+              <PropertyRef Name="menuID" />
+            </Principal>
+            <Dependent Role="detailcommande_menu">
+              <PropertyRef Name="menuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_commande_menu2">
+          <End Role="detailcommande" Type="Self.detailcommande" Multiplicity="1" />
+          <End Role="detailcommande_menu" Type="Self.detailcommande_menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="detailcommande">
+              <PropertyRef Name="detailcommandeID" />
+            </Principal>
+            <Dependent Role="detailcommande_menu">
+              <PropertyRef Name="detailcommandeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_commentaire_client">
+          <End Role="client" Type="Self.client" Multiplicity="0..1" />
+          <End Role="commentaire" Type="Self.commentaire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="clientID" />
+            </Principal>
+            <Dependent Role="commentaire">
+              <PropertyRef Name="clientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_commentaire_menu1">
+          <End Role="menu" Type="Self.menu" Multiplicity="1" />
+          <End Role="commentaire_menu" Type="Self.commentaire_menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="menu">
+              <PropertyRef Name="menuID" />
+            </Principal>
+            <Dependent Role="commentaire_menu">
+              <PropertyRef Name="menuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_commentaire_menu2">
+          <End Role="commentaire" Type="Self.commentaire" Multiplicity="1" />
+          <End Role="commentaire_menu" Type="Self.commentaire_menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="commentaire">
+              <PropertyRef Name="commentaireID" />
+            </Principal>
+            <Dependent Role="commentaire_menu">
+              <PropertyRef Name="commentaireID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_commentaire_produit1">
+          <End Role="produit" Type="Self.produit" Multiplicity="1" />
+          <End Role="commentaire_produit" Type="Self.commentaire_produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produit">
+              <PropertyRef Name="produitID" />
+            </Principal>
+            <Dependent Role="commentaire_produit">
+              <PropertyRef Name="produitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_commentaire_produit2">
+          <End Role="commentaire" Type="Self.commentaire" Multiplicity="1" />
+          <End Role="commentaire_produit" Type="Self.commentaire_produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="commentaire">
+              <PropertyRef Name="commentaireID" />
+            </Principal>
+            <Dependent Role="commentaire_produit">
+              <PropertyRef Name="commentaireID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_commentaire_restaurant">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="0..1" />
+          <End Role="commentaire" Type="Self.commentaire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="restaurantID" />
+            </Principal>
+            <Dependent Role="commentaire">
+              <PropertyRef Name="restaurantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detailcommande_produit1">
+          <End Role="produit" Type="Self.produit" Multiplicity="1" />
+          <End Role="detailcommande_produit" Type="Self.detailcommande_produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produit">
+              <PropertyRef Name="produitID" />
+            </Principal>
+            <Dependent Role="detailcommande_produit">
+              <PropertyRef Name="produitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detailcommande_produit2">
+          <End Role="detailcommande" Type="Self.detailcommande" Multiplicity="1" />
+          <End Role="detailcommande_produit" Type="Self.detailcommande_produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="detailcommande">
+              <PropertyRef Name="detailcommandeID" />
+            </Principal>
+            <Dependent Role="detailcommande_produit">
+              <PropertyRef Name="detailcommandeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detailcommande1">
+          <End Role="client" Type="Self.client" Multiplicity="0..1" />
+          <End Role="detailcommande" Type="Self.detailcommande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="clientID" />
+            </Principal>
+            <Dependent Role="detailcommande">
+              <PropertyRef Name="clientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detailcommande2">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1" />
+          <End Role="detailcommande" Type="Self.detailcommande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="restaurantID" />
+            </Principal>
+            <Dependent Role="detailcommande">
+              <PropertyRef Name="restaurantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detailcommande3">
+          <End Role="commande" Type="Self.commande" Multiplicity="1" />
+          <End Role="detailcommande" Type="Self.detailcommande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="commande">
+              <PropertyRef Name="commandeID" />
+            </Principal>
+            <Dependent Role="detailcommande">
+              <PropertyRef Name="commandeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detailcommandetmp_menu1">
+          <End Role="menu" Type="Self.menu" Multiplicity="1" />
+          <End Role="detailcommandetmp_menu" Type="Self.detailcommandetmp_menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="menu">
+              <PropertyRef Name="menuID" />
+            </Principal>
+            <Dependent Role="detailcommandetmp_menu">
+              <PropertyRef Name="menuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detailcommandetmp_menu2">
+          <End Role="detailcommandetmp" Type="Self.detailcommandetmp" Multiplicity="1" />
+          <End Role="detailcommandetmp_menu" Type="Self.detailcommandetmp_menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="detailcommandetmp">
+              <PropertyRef Name="detailcommandetmpID" />
+            </Principal>
+            <Dependent Role="detailcommandetmp_menu">
+              <PropertyRef Name="detailcommandetmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detailcommandetmp_produit1">
+          <End Role="produit" Type="Self.produit" Multiplicity="1" />
+          <End Role="detailcommandetmp_produit" Type="Self.detailcommandetmp_produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produit">
+              <PropertyRef Name="produitID" />
+            </Principal>
+            <Dependent Role="detailcommandetmp_produit">
+              <PropertyRef Name="produitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detailcommandetmp_produit2">
+          <End Role="detailcommandetmp" Type="Self.detailcommandetmp" Multiplicity="1" />
+          <End Role="detailcommandetmp_produit" Type="Self.detailcommandetmp_produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="detailcommandetmp">
+              <PropertyRef Name="detailcommandetmpID" />
+            </Principal>
+            <Dependent Role="detailcommandetmp_produit">
+              <PropertyRef Name="detailcommandetmpID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detailcommandetmp1">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1" />
+          <End Role="detailcommandetmp" Type="Self.detailcommandetmp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="restaurantID" />
+            </Principal>
+            <Dependent Role="detailcommandetmp">
+              <PropertyRef Name="restaurantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detailcommandetmp2">
+          <End Role="commande" Type="Self.commande" Multiplicity="1" />
+          <End Role="detailcommandetmp" Type="Self.detailcommandetmp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="commande">
+              <PropertyRef Name="commandeID" />
+            </Principal>
+            <Dependent Role="detailcommandetmp">
+              <PropertyRef Name="commandeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ingredient_produit1">
+          <End Role="produit" Type="Self.produit" Multiplicity="1" />
+          <End Role="ingredient_produit" Type="Self.ingredient_produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produit">
+              <PropertyRef Name="produitID" />
+            </Principal>
+            <Dependent Role="ingredient_produit">
+              <PropertyRef Name="produitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ingredient_produit2">
+          <End Role="ingredient" Type="Self.ingredient" Multiplicity="1" />
+          <End Role="ingredient_produit" Type="Self.ingredient_produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ingredient">
+              <PropertyRef Name="ingredientID" />
+            </Principal>
+            <Dependent Role="ingredient_produit">
+              <PropertyRef Name="ingredientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_menu">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1" />
+          <End Role="menu" Type="Self.menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="restaurantID" />
+            </Principal>
+            <Dependent Role="menu">
+              <PropertyRef Name="restaurantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_menu_produit1">
+          <End Role="menu" Type="Self.menu" Multiplicity="1" />
+          <End Role="menu_produit" Type="Self.menu_produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="menu">
+              <PropertyRef Name="menuID" />
+            </Principal>
+            <Dependent Role="menu_produit">
+              <PropertyRef Name="menuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_menu_produit2">
+          <End Role="produit" Type="Self.produit" Multiplicity="1" />
+          <End Role="menu_produit" Type="Self.menu_produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="produit">
+              <PropertyRef Name="produitID" />
+            </Principal>
+            <Dependent Role="menu_produit">
+              <PropertyRef Name="produitID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ouverture">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1" />
+          <End Role="ouverture" Type="Self.ouverture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="restaurantID" />
+            </Principal>
+            <Dependent Role="ouverture">
+              <PropertyRef Name="restaurantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_produit">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1" />
+          <End Role="produit" Type="Self.produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="restaurantID" />
+            </Principal>
+            <Dependent Role="produit">
+              <PropertyRef Name="restaurantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DataBaseASLRDModelStoreContainer">
+          <EntitySet Name="adresse" EntityType="Self.adresse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="commande" EntityType="Self.commande" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="commentaire" EntityType="Self.commentaire" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="commentaire_menu" EntityType="Self.commentaire_menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="commentaire_produit" EntityType="Self.commentaire_produit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detailcommande" EntityType="Self.detailcommande" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detailcommande_menu" EntityType="Self.detailcommande_menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detailcommande_produit" EntityType="Self.detailcommande_produit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detailcommandetmp" EntityType="Self.detailcommandetmp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detailcommandetmp_menu" EntityType="Self.detailcommandetmp_menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="detailcommandetmp_produit" EntityType="Self.detailcommandetmp_produit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ingredient" EntityType="Self.ingredient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ingredient_produit" EntityType="Self.ingredient_produit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="menu" EntityType="Self.menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="menu_produit" EntityType="Self.menu_produit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ouverture" EntityType="Self.ouverture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="produit" EntityType="Self.produit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="restaurant" EntityType="Self.restaurant" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_adresse1" Association="Self.FK_adresse1">
+            <End Role="client" EntitySet="client" />
+            <End Role="adresse" EntitySet="adresse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_adresse2" Association="Self.FK_adresse2">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="adresse" EntitySet="adresse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_commande_menu1" Association="Self.FK_commande_menu1">
+            <End Role="menu" EntitySet="menu" />
+            <End Role="detailcommande_menu" EntitySet="detailcommande_menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_commande_menu2" Association="Self.FK_commande_menu2">
+            <End Role="detailcommande" EntitySet="detailcommande" />
+            <End Role="detailcommande_menu" EntitySet="detailcommande_menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_commentaire_client" Association="Self.FK_commentaire_client">
+            <End Role="client" EntitySet="client" />
+            <End Role="commentaire" EntitySet="commentaire" />
+          </AssociationSet>
+          <AssociationSet Name="FK_commentaire_menu1" Association="Self.FK_commentaire_menu1">
+            <End Role="menu" EntitySet="menu" />
+            <End Role="commentaire_menu" EntitySet="commentaire_menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_commentaire_menu2" Association="Self.FK_commentaire_menu2">
+            <End Role="commentaire" EntitySet="commentaire" />
+            <End Role="commentaire_menu" EntitySet="commentaire_menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_commentaire_produit1" Association="Self.FK_commentaire_produit1">
+            <End Role="produit" EntitySet="produit" />
+            <End Role="commentaire_produit" EntitySet="commentaire_produit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_commentaire_produit2" Association="Self.FK_commentaire_produit2">
+            <End Role="commentaire" EntitySet="commentaire" />
+            <End Role="commentaire_produit" EntitySet="commentaire_produit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_commentaire_restaurant" Association="Self.FK_commentaire_restaurant">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="commentaire" EntitySet="commentaire" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detailcommande_produit1" Association="Self.FK_detailcommande_produit1">
+            <End Role="produit" EntitySet="produit" />
+            <End Role="detailcommande_produit" EntitySet="detailcommande_produit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detailcommande_produit2" Association="Self.FK_detailcommande_produit2">
+            <End Role="detailcommande" EntitySet="detailcommande" />
+            <End Role="detailcommande_produit" EntitySet="detailcommande_produit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detailcommande1" Association="Self.FK_detailcommande1">
+            <End Role="client" EntitySet="client" />
+            <End Role="detailcommande" EntitySet="detailcommande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detailcommande2" Association="Self.FK_detailcommande2">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="detailcommande" EntitySet="detailcommande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detailcommande3" Association="Self.FK_detailcommande3">
+            <End Role="commande" EntitySet="commande" />
+            <End Role="detailcommande" EntitySet="detailcommande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detailcommandetmp_menu1" Association="Self.FK_detailcommandetmp_menu1">
+            <End Role="menu" EntitySet="menu" />
+            <End Role="detailcommandetmp_menu" EntitySet="detailcommandetmp_menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detailcommandetmp_menu2" Association="Self.FK_detailcommandetmp_menu2">
+            <End Role="detailcommandetmp" EntitySet="detailcommandetmp" />
+            <End Role="detailcommandetmp_menu" EntitySet="detailcommandetmp_menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detailcommandetmp_produit1" Association="Self.FK_detailcommandetmp_produit1">
+            <End Role="produit" EntitySet="produit" />
+            <End Role="detailcommandetmp_produit" EntitySet="detailcommandetmp_produit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detailcommandetmp_produit2" Association="Self.FK_detailcommandetmp_produit2">
+            <End Role="detailcommandetmp" EntitySet="detailcommandetmp" />
+            <End Role="detailcommandetmp_produit" EntitySet="detailcommandetmp_produit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detailcommandetmp1" Association="Self.FK_detailcommandetmp1">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="detailcommandetmp" EntitySet="detailcommandetmp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detailcommandetmp2" Association="Self.FK_detailcommandetmp2">
+            <End Role="commande" EntitySet="commande" />
+            <End Role="detailcommandetmp" EntitySet="detailcommandetmp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ingredient_produit1" Association="Self.FK_ingredient_produit1">
+            <End Role="produit" EntitySet="produit" />
+            <End Role="ingredient_produit" EntitySet="ingredient_produit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ingredient_produit2" Association="Self.FK_ingredient_produit2">
+            <End Role="ingredient" EntitySet="ingredient" />
+            <End Role="ingredient_produit" EntitySet="ingredient_produit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_menu" Association="Self.FK_menu">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="menu" EntitySet="menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_menu_produit1" Association="Self.FK_menu_produit1">
+            <End Role="menu" EntitySet="menu" />
+            <End Role="menu_produit" EntitySet="menu_produit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_menu_produit2" Association="Self.FK_menu_produit2">
+            <End Role="produit" EntitySet="produit" />
+            <End Role="menu_produit" EntitySet="menu_produit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ouverture" Association="Self.FK_ouverture">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="ouverture" EntitySet="ouverture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_produit" Association="Self.FK_produit">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="produit" EntitySet="produit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DataBaseASLRDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="adresse">
+          <Key>
+            <PropertyRef Name="adresseID" />
+          </Key>
+          <Property Name="adresseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ville" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="rue" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="codepostal" Type="Int32" Nullable="false" />
+          <Property Name="clientID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="restaurantID" Type="Int32" />
+          <NavigationProperty Name="client" Relationship="Self.FK_adresse1" FromRole="adresse" ToRole="client" />
+          <NavigationProperty Name="restaurant" Relationship="Self.FK_adresse2" FromRole="adresse" ToRole="restaurant" />
+        </EntityType>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="clientID" />
+          </Key>
+          <Property Name="clientID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="motdepasse" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="telephone" Type="Int32" />
+          <Property Name="status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="genre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="adresse" Relationship="Self.FK_adresse1" FromRole="client" ToRole="adresse" />
+          <NavigationProperty Name="commentaire" Relationship="Self.FK_commentaire_client" FromRole="client" ToRole="commentaire" />
+          <NavigationProperty Name="detailcommande" Relationship="Self.FK_detailcommande1" FromRole="client" ToRole="detailcommande" />
+        </EntityType>
+        <EntityType Name="commande">
+          <Key>
+            <PropertyRef Name="commandeID" />
+          </Key>
+          <Property Name="commandeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="prixtotal" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="fraisdelivraison" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="reduction" Type="Double" />
+          <Property Name="datecommande" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="etatcommande" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="detailcommande" Relationship="Self.FK_detailcommande3" FromRole="commande" ToRole="detailcommande" />
+          <NavigationProperty Name="detailcommandetmp" Relationship="Self.FK_detailcommandetmp2" FromRole="commande" ToRole="detailcommandetmp" />
+        </EntityType>
+        <EntityType Name="commentaire">
+          <Key>
+            <PropertyRef Name="commentaireID" />
+          </Key>
+          <Property Name="commentaireID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="commentaire1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="note" Type="Int32" />
+          <Property Name="datecommentaire" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="restaurantID" Type="Int32" />
+          <Property Name="clientID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="client" Relationship="Self.FK_commentaire_client" FromRole="commentaire" ToRole="client" />
+          <NavigationProperty Name="restaurant" Relationship="Self.FK_commentaire_restaurant" FromRole="commentaire" ToRole="restaurant" />
+          <NavigationProperty Name="menu" Relationship="Self.commentaire_menu" FromRole="commentaire" ToRole="menu" />
+          <NavigationProperty Name="produit" Relationship="Self.commentaire_produit" FromRole="commentaire" ToRole="produit" />
+        </EntityType>
+        <EntityType Name="detailcommande">
+          <Key>
+            <PropertyRef Name="detailcommandeID" />
+          </Key>
+          <Property Name="detailcommandeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="quantitee" Type="Int32" Nullable="false" />
+          <Property Name="reduction" Type="Double" />
+          <Property Name="datedetailcommande" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="clientID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="restaurantID" Type="Int32" Nullable="false" />
+          <Property Name="commandeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="client" Relationship="Self.FK_detailcommande1" FromRole="detailcommande" ToRole="client" />
+          <NavigationProperty Name="commande" Relationship="Self.FK_detailcommande3" FromRole="detailcommande" ToRole="commande" />
+          <NavigationProperty Name="restaurant" Relationship="Self.FK_detailcommande2" FromRole="detailcommande" ToRole="restaurant" />
+          <NavigationProperty Name="menu" Relationship="Self.detailcommande_menu" FromRole="detailcommande" ToRole="menu" />
+          <NavigationProperty Name="produit" Relationship="Self.detailcommande_produit" FromRole="detailcommande" ToRole="produit" />
+        </EntityType>
+        <EntityType Name="detailcommandetmp">
+          <Key>
+            <PropertyRef Name="detailcommandetmpID" />
+          </Key>
+          <Property Name="detailcommandetmpID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sessionID" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="quantitee" Type="Int32" Nullable="false" />
+          <Property Name="reduction" Type="Double" />
+          <Property Name="datedetailcommande" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="restaurantID" Type="Int32" Nullable="false" />
+          <Property Name="commandeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="commande" Relationship="Self.FK_detailcommandetmp2" FromRole="detailcommandetmp" ToRole="commande" />
+          <NavigationProperty Name="restaurant" Relationship="Self.FK_detailcommandetmp1" FromRole="detailcommandetmp" ToRole="restaurant" />
+          <NavigationProperty Name="menu" Relationship="Self.detailcommandetmp_menu" FromRole="detailcommandetmp" ToRole="menu" />
+          <NavigationProperty Name="produit" Relationship="Self.detailcommandetmp_produit" FromRole="detailcommandetmp" ToRole="produit" />
+        </EntityType>
+        <EntityType Name="ingredient">
+          <Key>
+            <PropertyRef Name="ingredientID" />
+          </Key>
+          <Property Name="ingredientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="quantite" Type="Double" />
+          <Property Name="description" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="produit" Relationship="Self.ingredient_produit" FromRole="ingredient" ToRole="produit" />
+        </EntityType>
+        <EntityType Name="menu">
+          <Key>
+            <PropertyRef Name="menuID" />
+          </Key>
+          <Property Name="menuID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="prixmenu" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="delais" Type="Time" Precision="7" />
+          <Property Name="reduction" Type="Double" />
+          <Property Name="restaurantID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="restaurant" Relationship="Self.FK_menu" FromRole="menu" ToRole="restaurant" />
+          <NavigationProperty Name="commentaire" Relationship="Self.commentaire_menu" FromRole="menu" ToRole="commentaire" />
+          <NavigationProperty Name="detailcommande" Relationship="Self.detailcommande_menu" FromRole="menu" ToRole="detailcommande" />
+          <NavigationProperty Name="detailcommandetmp" Relationship="Self.detailcommandetmp_menu" FromRole="menu" ToRole="detailcommandetmp" />
+          <NavigationProperty Name="produit" Relationship="Self.menu_produit" FromRole="menu" ToRole="produit" />
+        </EntityType>
+        <EntityType Name="ouverture">
+          <Key>
+            <PropertyRef Name="ouvertureID" />
+          </Key>
+          <Property Name="ouvertureID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="jour" Type="String" MaxLength="8" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="heure_douverture" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="heure_de_fermeture" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="jour_ferme" Type="DateTime" Precision="0" />
+          <Property Name="restaurantID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="restaurant" Relationship="Self.FK_ouverture" FromRole="ouverture" ToRole="restaurant" />
+        </EntityType>
+        <EntityType Name="produit">
+          <Key>
+            <PropertyRef Name="produitID" />
+          </Key>
+          <Property Name="produitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="prixproduit" Type="Decimal" Precision="10" Scale="4" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="delais" Type="Time" Precision="7" />
+          <Property Name="reduction" Type="Double" />
+          <Property Name="restaurantID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="restaurant" Relationship="Self.FK_produit" FromRole="produit" ToRole="restaurant" />
+          <NavigationProperty Name="commentaire" Relationship="Self.commentaire_produit" FromRole="produit" ToRole="commentaire" />
+          <NavigationProperty Name="detailcommande" Relationship="Self.detailcommande_produit" FromRole="produit" ToRole="detailcommande" />
+          <NavigationProperty Name="detailcommandetmp" Relationship="Self.detailcommandetmp_produit" FromRole="produit" ToRole="detailcommandetmp" />
+          <NavigationProperty Name="ingredient" Relationship="Self.ingredient_produit" FromRole="produit" ToRole="ingredient" />
+          <NavigationProperty Name="menu" Relationship="Self.menu_produit" FromRole="produit" ToRole="menu" />
+        </EntityType>
+        <EntityType Name="restaurant">
+          <Key>
+            <PropertyRef Name="restaurantID" />
+          </Key>
+          <Property Name="restaurantID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="motdepasse" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="telephone" Type="Int32" />
+          <Property Name="status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="genre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="nsiret" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="adresse" Relationship="Self.FK_adresse2" FromRole="restaurant" ToRole="adresse" />
+          <NavigationProperty Name="commentaire" Relationship="Self.FK_commentaire_restaurant" FromRole="restaurant" ToRole="commentaire" />
+          <NavigationProperty Name="detailcommande" Relationship="Self.FK_detailcommande2" FromRole="restaurant" ToRole="detailcommande" />
+          <NavigationProperty Name="detailcommandetmp" Relationship="Self.FK_detailcommandetmp1" FromRole="restaurant" ToRole="detailcommandetmp" />
+          <NavigationProperty Name="menu" Relationship="Self.FK_menu" FromRole="restaurant" ToRole="menu" />
+          <NavigationProperty Name="ouverture" Relationship="Self.FK_ouverture" FromRole="restaurant" ToRole="ouverture" />
+          <NavigationProperty Name="produit" Relationship="Self.FK_produit" FromRole="restaurant" ToRole="produit" />
+        </EntityType>
+        <Association Name="FK_adresse1">
+          <End Role="client" Type="Self.client" Multiplicity="0..1" />
+          <End Role="adresse" Type="Self.adresse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="clientID" />
+            </Principal>
+            <Dependent Role="adresse">
+              <PropertyRef Name="clientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_adresse2">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="0..1" />
+          <End Role="adresse" Type="Self.adresse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="restaurantID" />
+            </Principal>
+            <Dependent Role="adresse">
+              <PropertyRef Name="restaurantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_commentaire_client">
+          <End Role="client" Type="Self.client" Multiplicity="0..1" />
+          <End Role="commentaire" Type="Self.commentaire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="clientID" />
+            </Principal>
+            <Dependent Role="commentaire">
+              <PropertyRef Name="clientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detailcommande1">
+          <End Role="client" Type="Self.client" Multiplicity="0..1" />
+          <End Role="detailcommande" Type="Self.detailcommande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="clientID" />
+            </Principal>
+            <Dependent Role="detailcommande">
+              <PropertyRef Name="clientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detailcommande3">
+          <End Role="commande" Type="Self.commande" Multiplicity="1" />
+          <End Role="detailcommande" Type="Self.detailcommande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="commande">
+              <PropertyRef Name="commandeID" />
+            </Principal>
+            <Dependent Role="detailcommande">
+              <PropertyRef Name="commandeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detailcommandetmp2">
+          <End Role="commande" Type="Self.commande" Multiplicity="1" />
+          <End Role="detailcommandetmp" Type="Self.detailcommandetmp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="commande">
+              <PropertyRef Name="commandeID" />
+            </Principal>
+            <Dependent Role="detailcommandetmp">
+              <PropertyRef Name="commandeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_commentaire_restaurant">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="0..1" />
+          <End Role="commentaire" Type="Self.commentaire" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="restaurantID" />
+            </Principal>
+            <Dependent Role="commentaire">
+              <PropertyRef Name="restaurantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detailcommande2">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1" />
+          <End Role="detailcommande" Type="Self.detailcommande" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="restaurantID" />
+            </Principal>
+            <Dependent Role="detailcommande">
+              <PropertyRef Name="restaurantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_detailcommandetmp1">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1" />
+          <End Role="detailcommandetmp" Type="Self.detailcommandetmp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="restaurantID" />
+            </Principal>
+            <Dependent Role="detailcommandetmp">
+              <PropertyRef Name="restaurantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_menu">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1" />
+          <End Role="menu" Type="Self.menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="restaurantID" />
+            </Principal>
+            <Dependent Role="menu">
+              <PropertyRef Name="restaurantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ouverture">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1" />
+          <End Role="ouverture" Type="Self.ouverture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="restaurantID" />
+            </Principal>
+            <Dependent Role="ouverture">
+              <PropertyRef Name="restaurantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_produit">
+          <End Role="restaurant" Type="Self.restaurant" Multiplicity="1" />
+          <End Role="produit" Type="Self.produit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurant">
+              <PropertyRef Name="restaurantID" />
+            </Principal>
+            <Dependent Role="produit">
+              <PropertyRef Name="restaurantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="commentaire_menu">
+          <End Role="menu" Type="Self.menu" Multiplicity="*" />
+          <End Role="commentaire" Type="Self.commentaire" Multiplicity="*" />
+        </Association>
+        <Association Name="commentaire_produit">
+          <End Role="produit" Type="Self.produit" Multiplicity="*" />
+          <End Role="commentaire" Type="Self.commentaire" Multiplicity="*" />
+        </Association>
+        <Association Name="detailcommande_menu">
+          <End Role="menu" Type="Self.menu" Multiplicity="*" />
+          <End Role="detailcommande" Type="Self.detailcommande" Multiplicity="*" />
+        </Association>
+        <Association Name="detailcommande_produit">
+          <End Role="produit" Type="Self.produit" Multiplicity="*" />
+          <End Role="detailcommande" Type="Self.detailcommande" Multiplicity="*" />
+        </Association>
+        <Association Name="detailcommandetmp_menu">
+          <End Role="menu" Type="Self.menu" Multiplicity="*" />
+          <End Role="detailcommandetmp" Type="Self.detailcommandetmp" Multiplicity="*" />
+        </Association>
+        <Association Name="detailcommandetmp_produit">
+          <End Role="produit" Type="Self.produit" Multiplicity="*" />
+          <End Role="detailcommandetmp" Type="Self.detailcommandetmp" Multiplicity="*" />
+        </Association>
+        <Association Name="ingredient_produit">
+          <End Role="produit" Type="Self.produit" Multiplicity="*" />
+          <End Role="ingredient" Type="Self.ingredient" Multiplicity="*" />
+        </Association>
+        <Association Name="menu_produit">
+          <End Role="menu" Type="Self.menu" Multiplicity="*" />
+          <End Role="produit" Type="Self.produit" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DataBaseASLRDEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="adresse" EntityType="Self.adresse" />
+          <EntitySet Name="client" EntityType="Self.client" />
+          <EntitySet Name="commande" EntityType="Self.commande" />
+          <EntitySet Name="commentaire" EntityType="Self.commentaire" />
+          <EntitySet Name="detailcommande" EntityType="Self.detailcommande" />
+          <EntitySet Name="detailcommandetmp" EntityType="Self.detailcommandetmp" />
+          <EntitySet Name="ingredient" EntityType="Self.ingredient" />
+          <EntitySet Name="menu" EntityType="Self.menu" />
+          <EntitySet Name="ouverture" EntityType="Self.ouverture" />
+          <EntitySet Name="produit" EntityType="Self.produit" />
+          <EntitySet Name="restaurant" EntityType="Self.restaurant" />
+          <AssociationSet Name="FK_adresse1" Association="Self.FK_adresse1">
+            <End Role="client" EntitySet="client" />
+            <End Role="adresse" EntitySet="adresse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_adresse2" Association="Self.FK_adresse2">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="adresse" EntitySet="adresse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_commentaire_client" Association="Self.FK_commentaire_client">
+            <End Role="client" EntitySet="client" />
+            <End Role="commentaire" EntitySet="commentaire" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detailcommande1" Association="Self.FK_detailcommande1">
+            <End Role="client" EntitySet="client" />
+            <End Role="detailcommande" EntitySet="detailcommande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detailcommande3" Association="Self.FK_detailcommande3">
+            <End Role="commande" EntitySet="commande" />
+            <End Role="detailcommande" EntitySet="detailcommande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detailcommandetmp2" Association="Self.FK_detailcommandetmp2">
+            <End Role="commande" EntitySet="commande" />
+            <End Role="detailcommandetmp" EntitySet="detailcommandetmp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_commentaire_restaurant" Association="Self.FK_commentaire_restaurant">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="commentaire" EntitySet="commentaire" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detailcommande2" Association="Self.FK_detailcommande2">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="detailcommande" EntitySet="detailcommande" />
+          </AssociationSet>
+          <AssociationSet Name="FK_detailcommandetmp1" Association="Self.FK_detailcommandetmp1">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="detailcommandetmp" EntitySet="detailcommandetmp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_menu" Association="Self.FK_menu">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="menu" EntitySet="menu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ouverture" Association="Self.FK_ouverture">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="ouverture" EntitySet="ouverture" />
+          </AssociationSet>
+          <AssociationSet Name="FK_produit" Association="Self.FK_produit">
+            <End Role="restaurant" EntitySet="restaurant" />
+            <End Role="produit" EntitySet="produit" />
+          </AssociationSet>
+          <AssociationSet Name="commentaire_menu" Association="Self.commentaire_menu">
+            <End Role="menu" EntitySet="menu" />
+            <End Role="commentaire" EntitySet="commentaire" />
+          </AssociationSet>
+          <AssociationSet Name="commentaire_produit" Association="Self.commentaire_produit">
+            <End Role="produit" EntitySet="produit" />
+            <End Role="commentaire" EntitySet="commentaire" />
+          </AssociationSet>
+          <AssociationSet Name="detailcommande_menu" Association="Self.detailcommande_menu">
+            <End Role="menu" EntitySet="menu" />
+            <End Role="detailcommande" EntitySet="detailcommande" />
+          </AssociationSet>
+          <AssociationSet Name="detailcommande_produit" Association="Self.detailcommande_produit">
+            <End Role="produit" EntitySet="produit" />
+            <End Role="detailcommande" EntitySet="detailcommande" />
+          </AssociationSet>
+          <AssociationSet Name="detailcommandetmp_menu" Association="Self.detailcommandetmp_menu">
+            <End Role="menu" EntitySet="menu" />
+            <End Role="detailcommandetmp" EntitySet="detailcommandetmp" />
+          </AssociationSet>
+          <AssociationSet Name="detailcommandetmp_produit" Association="Self.detailcommandetmp_produit">
+            <End Role="produit" EntitySet="produit" />
+            <End Role="detailcommandetmp" EntitySet="detailcommandetmp" />
+          </AssociationSet>
+          <AssociationSet Name="ingredient_produit" Association="Self.ingredient_produit">
+            <End Role="produit" EntitySet="produit" />
+            <End Role="ingredient" EntitySet="ingredient" />
+          </AssociationSet>
+          <AssociationSet Name="menu_produit" Association="Self.menu_produit">
+            <End Role="menu" EntitySet="menu" />
+            <End Role="produit" EntitySet="produit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DataBaseASLRDModelStoreContainer" CdmEntityContainer="DataBaseASLRDEntities">
+          <EntitySetMapping Name="adresse">
+            <EntityTypeMapping TypeName="DataBaseASLRDModel.adresse">
+              <MappingFragment StoreEntitySet="adresse">
+                <ScalarProperty Name="adresseID" ColumnName="adresseID" />
+                <ScalarProperty Name="ville" ColumnName="ville" />
+                <ScalarProperty Name="rue" ColumnName="rue" />
+                <ScalarProperty Name="codepostal" ColumnName="codepostal" />
+                <ScalarProperty Name="clientID" ColumnName="clientID" />
+                <ScalarProperty Name="restaurantID" ColumnName="restaurantID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="client">
+            <EntityTypeMapping TypeName="DataBaseASLRDModel.client">
+              <MappingFragment StoreEntitySet="client">
+                <ScalarProperty Name="clientID" ColumnName="clientID" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="motdepasse" ColumnName="motdepasse" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="genre" ColumnName="genre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="commande">
+            <EntityTypeMapping TypeName="DataBaseASLRDModel.commande">
+              <MappingFragment StoreEntitySet="commande">
+                <ScalarProperty Name="commandeID" ColumnName="commandeID" />
+                <ScalarProperty Name="prixtotal" ColumnName="prixtotal" />
+                <ScalarProperty Name="fraisdelivraison" ColumnName="fraisdelivraison" />
+                <ScalarProperty Name="reduction" ColumnName="reduction" />
+                <ScalarProperty Name="datecommande" ColumnName="datecommande" />
+                <ScalarProperty Name="etatcommande" ColumnName="etatcommande" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="commentaire">
+            <EntityTypeMapping TypeName="DataBaseASLRDModel.commentaire">
+              <MappingFragment StoreEntitySet="commentaire">
+                <ScalarProperty Name="commentaireID" ColumnName="commentaireID" />
+                <ScalarProperty Name="commentaire1" ColumnName="commentaire" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="datecommentaire" ColumnName="datecommentaire" />
+                <ScalarProperty Name="restaurantID" ColumnName="restaurantID" />
+                <ScalarProperty Name="clientID" ColumnName="clientID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="detailcommande">
+            <EntityTypeMapping TypeName="DataBaseASLRDModel.detailcommande">
+              <MappingFragment StoreEntitySet="detailcommande">
+                <ScalarProperty Name="detailcommandeID" ColumnName="detailcommandeID" />
+                <ScalarProperty Name="quantitee" ColumnName="quantitee" />
+                <ScalarProperty Name="reduction" ColumnName="reduction" />
+                <ScalarProperty Name="datedetailcommande" ColumnName="datedetailcommande" />
+                <ScalarProperty Name="clientID" ColumnName="clientID" />
+                <ScalarProperty Name="restaurantID" ColumnName="restaurantID" />
+                <ScalarProperty Name="commandeID" ColumnName="commandeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="detailcommandetmp">
+            <EntityTypeMapping TypeName="DataBaseASLRDModel.detailcommandetmp">
+              <MappingFragment StoreEntitySet="detailcommandetmp">
+                <ScalarProperty Name="detailcommandetmpID" ColumnName="detailcommandetmpID" />
+                <ScalarProperty Name="sessionID" ColumnName="sessionID" />
+                <ScalarProperty Name="quantitee" ColumnName="quantitee" />
+                <ScalarProperty Name="reduction" ColumnName="reduction" />
+                <ScalarProperty Name="datedetailcommande" ColumnName="datedetailcommande" />
+                <ScalarProperty Name="restaurantID" ColumnName="restaurantID" />
+                <ScalarProperty Name="commandeID" ColumnName="commandeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ingredient">
+            <EntityTypeMapping TypeName="DataBaseASLRDModel.ingredient">
+              <MappingFragment StoreEntitySet="ingredient">
+                <ScalarProperty Name="ingredientID" ColumnName="ingredientID" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="quantite" ColumnName="quantite" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="menu">
+            <EntityTypeMapping TypeName="DataBaseASLRDModel.menu">
+              <MappingFragment StoreEntitySet="menu">
+                <ScalarProperty Name="menuID" ColumnName="menuID" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prixmenu" ColumnName="prixmenu" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="delais" ColumnName="delais" />
+                <ScalarProperty Name="reduction" ColumnName="reduction" />
+                <ScalarProperty Name="restaurantID" ColumnName="restaurantID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ouverture">
+            <EntityTypeMapping TypeName="DataBaseASLRDModel.ouverture">
+              <MappingFragment StoreEntitySet="ouverture">
+                <ScalarProperty Name="ouvertureID" ColumnName="ouvertureID" />
+                <ScalarProperty Name="jour" ColumnName="jour" />
+                <ScalarProperty Name="heure_douverture" ColumnName="heure_douverture" />
+                <ScalarProperty Name="heure_de_fermeture" ColumnName="heure_de_fermeture" />
+                <ScalarProperty Name="jour_ferme" ColumnName="jour_ferme" />
+                <ScalarProperty Name="restaurantID" ColumnName="restaurantID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="produit">
+            <EntityTypeMapping TypeName="DataBaseASLRDModel.produit">
+              <MappingFragment StoreEntitySet="produit">
+                <ScalarProperty Name="produitID" ColumnName="produitID" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prixproduit" ColumnName="prixproduit" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="delais" ColumnName="delais" />
+                <ScalarProperty Name="reduction" ColumnName="reduction" />
+                <ScalarProperty Name="restaurantID" ColumnName="restaurantID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="restaurant">
+            <EntityTypeMapping TypeName="DataBaseASLRDModel.restaurant">
+              <MappingFragment StoreEntitySet="restaurant">
+                <ScalarProperty Name="restaurantID" ColumnName="restaurantID" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="motdepasse" ColumnName="motdepasse" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="genre" ColumnName="genre" />
+                <ScalarProperty Name="nsiret" ColumnName="nsiret" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="commentaire_menu" TypeName="DataBaseASLRDModel.commentaire_menu" StoreEntitySet="commentaire_menu">
+            <EndProperty Name="menu">
+              <ScalarProperty Name="menuID" ColumnName="menuID" />
+            </EndProperty>
+            <EndProperty Name="commentaire">
+              <ScalarProperty Name="commentaireID" ColumnName="commentaireID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="commentaire_produit" TypeName="DataBaseASLRDModel.commentaire_produit" StoreEntitySet="commentaire_produit">
+            <EndProperty Name="produit">
+              <ScalarProperty Name="produitID" ColumnName="produitID" />
+            </EndProperty>
+            <EndProperty Name="commentaire">
+              <ScalarProperty Name="commentaireID" ColumnName="commentaireID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="detailcommande_menu" TypeName="DataBaseASLRDModel.detailcommande_menu" StoreEntitySet="detailcommande_menu">
+            <EndProperty Name="menu">
+              <ScalarProperty Name="menuID" ColumnName="menuID" />
+            </EndProperty>
+            <EndProperty Name="detailcommande">
+              <ScalarProperty Name="detailcommandeID" ColumnName="detailcommandeID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="detailcommande_produit" TypeName="DataBaseASLRDModel.detailcommande_produit" StoreEntitySet="detailcommande_produit">
+            <EndProperty Name="produit">
+              <ScalarProperty Name="produitID" ColumnName="produitID" />
+            </EndProperty>
+            <EndProperty Name="detailcommande">
+              <ScalarProperty Name="detailcommandeID" ColumnName="detailcommandeID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="detailcommandetmp_menu" TypeName="DataBaseASLRDModel.detailcommandetmp_menu" StoreEntitySet="detailcommandetmp_menu">
+            <EndProperty Name="menu">
+              <ScalarProperty Name="menuID" ColumnName="menuID" />
+            </EndProperty>
+            <EndProperty Name="detailcommandetmp">
+              <ScalarProperty Name="detailcommandetmpID" ColumnName="detailcommandetmpID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="detailcommandetmp_produit" TypeName="DataBaseASLRDModel.detailcommandetmp_produit" StoreEntitySet="detailcommandetmp_produit">
+            <EndProperty Name="produit">
+              <ScalarProperty Name="produitID" ColumnName="produitID" />
+            </EndProperty>
+            <EndProperty Name="detailcommandetmp">
+              <ScalarProperty Name="detailcommandetmpID" ColumnName="detailcommandetmpID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ingredient_produit" TypeName="DataBaseASLRDModel.ingredient_produit" StoreEntitySet="ingredient_produit">
+            <EndProperty Name="produit">
+              <ScalarProperty Name="produitID" ColumnName="produitID" />
+            </EndProperty>
+            <EndProperty Name="ingredient">
+              <ScalarProperty Name="ingredientID" ColumnName="ingredientID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="menu_produit" TypeName="DataBaseASLRDModel.menu_produit" StoreEntitySet="menu_produit">
+            <EndProperty Name="menu">
+              <ScalarProperty Name="menuID" ColumnName="menuID" />
+            </EndProperty>
+            <EndProperty Name="produit">
+              <ScalarProperty Name="produitID" ColumnName="produitID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,53 @@
+﻿@model IEnumerable<ASLRD_r3.DAL.produit>
+
+@{
+    ViewBag.Title = "Produit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div></div>
+<h2>Liste des produits pour le restaurant xxx de la ville de @ViewData["cityname"]</h2>
+
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.prixproduit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.delais)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.reduction)
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.prixproduit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.delais)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.reduction)
+            </td>
+            <td>
+                @Html.ActionLink("Ajouter", "AddToPanier", new { produitID = @item.produitID })
+            </td>
+        </tr>
+    }
+</table>

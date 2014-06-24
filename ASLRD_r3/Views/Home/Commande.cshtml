@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ASLRD_r3.DAL.detailcommandetmp>
+
+@{
+    ViewBag.Title = "Commande";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2></h2>
+<h2>Commande</h2>
+
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.quantitee)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.reduction)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.datedetailcommande)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.restaurantID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.commandeID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.quantitee)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.reduction)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.datedetailcommande)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.restaurantID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.commandeID)
+        </td>
+        <td>
+            @Html.ActionLink("Modifier", "Modifier", new { id = item.detailcommandetmpID }) |
+            @Html.ActionLink("Supprimer", "Supprimer", new { id = item.detailcommandetmpID })
+        </td>
+    </tr>
+}
+
+</table>
