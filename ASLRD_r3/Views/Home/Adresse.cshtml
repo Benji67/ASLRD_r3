@@ -2,11 +2,12 @@
 
 @{
     ViewBag.Title = "Rechercher";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";    
 }
-
+<br />
 <h2>@ViewBag.Title votre restaurant</h2>
-@using (Html.BeginForm("GetRestaurant", "Home", FormMethod.Get, new { cityname = "ville" }))
+
+@using (Html.BeginForm("GetRestaurant", "Home", new { cityname = "ville" }, FormMethod.Get))
 {
     <p>
         Find by name: @Html.TextBox("cityname")
@@ -14,7 +15,7 @@
     </p>
     <p class="message-error">@ViewBag.error</p>
 }
-<div></div>
+<br />
 <h2>Commentaire</h2>
 <table>
     @foreach (var item in Model)

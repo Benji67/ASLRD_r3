@@ -4,8 +4,7 @@
     ViewBag.Title = "Commande";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2></h2>
+<br />
 <h2>Commande</h2>
 
 <table>
@@ -46,10 +45,9 @@
             @Html.DisplayFor(modelItem => item.commandeID)
         </td>
         <td>
-            @Html.ActionLink("Modifier", "Modifier", new { id = item.detailcommandetmpID }) |
-            @Html.ActionLink("Supprimer", "Supprimer", new { id = item.detailcommandetmpID })
+            @Html.ActionLink("Supprimer", "RemoveFromPanierTMP", new { id = item.detailcommandetmpID })
         </td>
     </tr>
 }
-
 </table>
+<p class="message-error">@ViewBag.error</p>

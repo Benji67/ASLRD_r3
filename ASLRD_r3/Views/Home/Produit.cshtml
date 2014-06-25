@@ -3,10 +3,12 @@
 @{
     ViewBag.Title = "Produit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string cityname = Request.Params["cityname"];
+    string restaurantname = Request.Params["restaurantname"];
 }
 
-<div></div>
-<h2>Liste des produits pour le restaurant @(Request.Params["restaurantname"]) de @(Request.Params["cityname"])</h2>
+<br />
+<h2>Liste des produits pour @restaurantname de <a href="@Url.Action("GetRestaurant", "Home", new { cityname = @cityname })">@cityname</a></h2>
 
 <table>
     <tr>
@@ -46,8 +48,16 @@
                 @Html.DisplayFor(modelItem => item.reduction)
             </td>
             <td>
-                @Html.ActionLink("Ajouter", "AddToPanier", new { produitID = @item.produitID })
+                @Html.ActionLink("Ajouter", "AddToPanierTMP", new { produitID = @item.produitID, restaurantID = @item.restaurantID, CommandeID = @ViewData["CID"] })
             </td>
         </tr>
     }
 </table>
+@Html.ActionLink("voir", "GetCommande", new { CommandeID = @ViewData["CID"] })
+@using (Html.BeginForm("GetCommande", "Home", new { CommandeID = @ViewData["CID"] }, FormMethod.Get))
+{
+    <p>
+        <input type="submit" value="Afficher commande" />
+    </p>
+    <p class="message-error">@ViewBag.error</p>
+}
