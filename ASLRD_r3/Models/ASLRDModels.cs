@@ -65,6 +65,22 @@ namespace ASLRD_r3.Models
             }
         }
 
+        //retourne la liste des ville s      
+        public List<string> MGetVille()
+        {
+
+            var listeville = (from a in db.adresse select a.ville).ToList();
+            if (listeville.FirstOrDefault() == null)
+            {
+                List<string> listevilleeE = new List<string>();
+                return listevilleeE;
+            }
+            else
+            {
+                return listeville;
+            }
+        }
+
         //retourne la liste des commentaires        
         public List<restaurant> MGetRestaurant(string CityName)
         {
@@ -105,15 +121,13 @@ namespace ASLRD_r3.Models
         //Ajouter un produit au panier        
         public void MAddToPanierTMP(produit Produit, int RestaurantID, int CommandeID, string SessionID)
         {
-
-            var CommandeIDItem = (from c in db.commande select c).OrderByDescending(c => c.datecommande).FirstOrDefault();
             var commandedetailtmpItem = new detailcommandetmp
             {
                 sessionID = SessionID,
                 datedetailcommande = DateTime.Now,
                 quantitee = 1,
                 restaurantID = RestaurantID,
-                commandeID = CommandeID
+                commandeID = CommandeID,
             };
             db.detailcommandetmp.Add(commandedetailtmpItem);
             db.SaveChanges();

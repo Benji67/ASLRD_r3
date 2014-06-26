@@ -12,8 +12,9 @@ namespace ASLRD_r3.Controllers
     {
         private DataBaseASLRDEntities db = new DataBaseASLRDEntities();
 
+        // Page adresse simple
         [HandleError]
-        public ActionResult Adresse()
+        public ActionResult AdresseSTD()
         {
             ViewBag.Message = "Adresse";
             ViewBag.error = "";
@@ -21,6 +22,16 @@ namespace ASLRD_r3.Controllers
             return View(cart.MGetCommentaire());            
         }
 
+        // Page adresse avec AJAX et Autocomplete
+       [HandleError]
+        public ActionResult AdresseAC()
+        {
+            ViewBag.Message = "Adresse";
+            ViewBag.error = "";
+            var cart = ASLRDModels.MGetCart(this.HttpContext);
+            return View(cart.MGetCommentaire());  
+        }
+        
         [HandleError]
         public ActionResult Restaurant()
         {
@@ -164,6 +175,15 @@ namespace ASLRD_r3.Controllers
                 // AFFICHER la liste des produits
                 return View("Commande", listedetailcommandetmp);
             }           
+        }
+
+        // Retourne la liste de ville pour l'autocomplete de la page adresse avec AJAX 
+        public JsonResult AAutoComplete(string term)
+        {
+            var result = (from a in db.adresse
+                          where a.ville.ToLower().Contains(term.ToLower())
+                          select new { a.ville }).Distinct();
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -374,11 +374,12 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Home\Adresse.cshtml" />
+    <Content Include="Views\Home\AdresseSTD.cshtml" />
     <Content Include="Views\Home\Commande.cshtml" />
     <Content Include="Views\Home\Produit.cshtml" />
     <Content Include="Views\Home\Restaurant.cshtml" />
     <Content Include="Views\Shared\_Commentaire.cshtml" />
+    <Content Include="Views\Home\AdresseAC.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

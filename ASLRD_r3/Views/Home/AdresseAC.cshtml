@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ASLRD_r3.DAL.commentaire>
+
+@{
+    ViewBag.Title = "Rechercher";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<h2>@ViewBag.Title votre restaurant</h2>
+
+@using (Html.BeginForm("GetRestaurant", "Home", new { cityname = "ville" }, FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("cityname")
+        <input type="submit" value="Search" />
+    </p>
+    <p class="message-error">@ViewBag.error</p>
+}
+<script>
+    $("#cityname").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "/Home/AAutoComplete",
+                type: "POST",
+                dataType: "json",
+                data: { term: request.term },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.ville, value: item.ville };
+                    }))
+
+                }
+            })
+        },
+        messages: {
+            noResults: "", results: ""
+        }
+    });
+</script>
+<br />
+<h2>Commentaire</h2>
+<table>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.commentaire1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.datecommentaire)
+            </td>
+            <!--<td>
+                @Html.DisplayFor(modelItem => item.restaurantID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.clientID)
+            </td>
+            -->
+        </tr>
+    }
+</table>
