@@ -9,6 +9,7 @@ namespace ASLRD_r3.Models
 {
     public class ASLRDModels
     {
+        // Instancie la base de donnée 
         private DataBaseASLRDEntities db = new DataBaseASLRDEntities();
         string ShoppingCartId { get; set; }
         public const string CartSessionKey = "CartId";
@@ -20,13 +21,13 @@ namespace ASLRD_r3.Models
             return cart;
         }
 
-        // Helper method to simplify shopping cart calls
+        // Méthode d'aide pour simplier l'appel de Cart (MGetCart)
         public static ASLRDModels MGetCart(Controller controller)
         {
             return MGetCart(controller.HttpContext);
         }
 
-        // We're using HttpContextBase to allow access to cookies.
+        // Utilisation de HttpContextBase pour authoriser l'acces aux cookies.
         public string MGetCartId(HttpContextBase context)
         {
             string CartSessionKey = "CartId";
@@ -39,23 +40,24 @@ namespace ASLRD_r3.Models
                 }
                 else
                 {
-                    // Generate a new random GUID using System.Guid class
+                    // Génere un nouveau GUID avec la classe System.Guid
                     Guid tempCartId = Guid.NewGuid();
-                    // Send tempCartId back to client as a cookie
+                    // Envoi tempCartId au client commme un cookie
                     context.Session[CartSessionKey] = tempCartId.ToString();
                 }
             }
             return context.Session[CartSessionKey].ToString();
         }
 
-
-        //retourne la liste des commentaires        
+        //Retourne la liste des commentaires        
         public List<commentaire> MGetCommentaire()
         {
-
-            var listecommentaire = (from c in db.commentaire select c).ToList();
+            // liste de commantaire
+            var listecommentaire = (from c in db.commentaire orderby c.datecommentaire select c).Distinct().ToList();
+            // Test si il a y quelque chose dans la liste
             if (listecommentaire.FirstOrDefault() == null)
             {
+                // Si la liste de commentaire est vide, on créer un liste vide de type commentaire et on retourne une liste vide
                 List<commentaire> listecommentaireE = new List<commentaire>();
                 return listecommentaireE;
             }
@@ -65,10 +67,9 @@ namespace ASLRD_r3.Models
             }
         }
 
-        //retourne la liste des ville s      
+        //Retourne la liste des villes      
         public List<string> MGetVille()
         {
-
             var listeville = (from a in db.adresse select a.ville).ToList();
             if (listeville.FirstOrDefault() == null)
             {
@@ -81,7 +82,7 @@ namespace ASLRD_r3.Models
             }
         }
 
-        //retourne la liste des commentaires        
+        //retourne la liste des restaurants        
         public List<restaurant> MGetRestaurant(string CityName)
         {
             var listerestaurant = (from r in db.restaurant
@@ -92,7 +93,7 @@ namespace ASLRD_r3.Models
             return listerestaurant;
         }
                
-        //ajout une commande        
+        //Initialise une commande et retourne un numero de commande
         public int MAddCommande()
         {
             var commandeItem = new commande
@@ -107,7 +108,7 @@ namespace ASLRD_r3.Models
             return CommandeIDItem.commandeID;
         }
 
-        //retourne la liste de produit suivant un restaurant        
+        //Retourne la liste de produit suivant un restaurant        
         public List<produit> MGetProduit(int RestaurantID)
         {
             var listeproduit = (from p in db.produit
@@ -115,10 +116,18 @@ namespace ASLRD_r3.Models
                                 where r.restaurantID == RestaurantID
                                 where p.restaurantID == r.restaurantID
                                 select p).ToList();
-            return listeproduit;
+             if (listeproduit.FirstOrDefault() == null)
+            {
+                List<produit> listeproduitE = new List<produit>();
+                return listeproduitE;
+            }
+            else
+            {
+                return listeproduit;
+            }
         }
 
-        //Ajouter un produit au panier        
+        //Ajoute un produit au panier temporaire ( panier temporaire -> utilisé si le client n'est pas authentifié)       
         public void MAddToPanierTMP(produit Produit, int RestaurantID, int CommandeID, string SessionID)
         {
             var commandedetailtmpItem = new detailcommandetmp
@@ -127,17 +136,19 @@ namespace ASLRD_r3.Models
                 datedetailcommande = DateTime.Now,
                 quantitee = 1,
                 restaurantID = RestaurantID,
-                commandeID = CommandeID,
+                commandeID = CommandeID
             };
             db.detailcommandetmp.Add(commandedetailtmpItem);
             db.SaveChanges();
         }
 
-        //Supprimer un produit du panier temporaire
-        public void MRemoveFromPanierTMP(int ProduitID, string SessionID)
-        {           
-            // LIST of detail commande avec le sessionID and le produit a supprimer
-            var cartItem = db.detailcommandetmp.Single(dctmp => dctmp.sessionID == SessionID /*&& dctmp.produit == Produit*/);
+        //Supprime un produit du panier temporaire ( panier temporaire -> utilisé si le client n'est pas authentifié)  
+        public void MRemoveFromPanierTMP(int DetailCommandetmpID, string SessionID)
+        {
+            var cartItem = (from dctmp in db.detailcommandetmp
+                            where dctmp.sessionID == SessionID
+                            where dctmp.detailcommandetmpID == DetailCommandetmpID
+                            select dctmp).First();
             // Si il y a bien un produit
             if (cartItem != null)
             {
@@ -148,11 +159,28 @@ namespace ASLRD_r3.Models
             }
         }
 
-        //Supprimer un produit du panier
-        public void MRemoveFromPanier(int ProduitID, string ClientID)
+        //Ajoute un produit au panier      
+        public void MAddToPanier(produit Produit, int RestaurantID, int CommandeID, string SessionID)
         {
-            // LIST of detail commande avec le sessionID and le produit a supprimer
-            var cartItem = db.detailcommande.Single(dctmp => dctmp.clientID == ClientID /*&& dctmp.produit == Produit*/);
+            var commandedetailItem = new detailcommande
+            {
+                clientID = SessionID,
+                datedetailcommande = DateTime.Now,
+                quantitee = 1,
+                restaurantID = RestaurantID,
+                commandeID = CommandeID,
+            };
+            db.detailcommande.Add(commandedetailItem);
+            db.SaveChanges();
+        }
+
+        //Supprime un produit du panier
+        public void MRemoveFromPanier(int DetailCommandeID, string ClientID)
+        {
+            var cartItem = (from dc in db.detailcommande
+                            where dc.clientID == ClientID
+                            where dc.detailcommandeID == DetailCommandeID
+                            select dc).First();
             // Si il y a bien un produit
             if (cartItem != null)
             {
@@ -163,6 +191,7 @@ namespace ASLRD_r3.Models
             }
         }
 
+        //Retourne la commande avec les différents produits du panier temporaire
         public List<detailcommandetmp> GetCommandeTMP(int CommandeID, string SessionID)
         {          
             // LISTE la commande
@@ -170,7 +199,6 @@ namespace ASLRD_r3.Models
                                           where dc.commandeID == CommandeID 
                                           where dc.sessionID == SessionID
                                           select dc).ToList();
-            // SI il n'y rien dans le panier
             if (listedetailcommandetmp.FirstOrDefault() == null)
             {
                 List<detailcommandetmp> listedetailcommandetmpE = new List<detailcommandetmp>();
@@ -182,11 +210,10 @@ namespace ASLRD_r3.Models
             }
         }
 
+        //Retourne la commande avec les différents produits du panier
         public List<detailcommande> GetCommande(int CommandeID)
         {
-            // LISTE la commande
             var listedetailcommande = (from dc in db.detailcommande where dc.commandeID == CommandeID select dc).ToList();
-            // SI il n'y rien dans le panier
             if (listedetailcommande.FirstOrDefault() == null)
             {
                 List<detailcommande> listedetailcommandeE = new List<detailcommande>();

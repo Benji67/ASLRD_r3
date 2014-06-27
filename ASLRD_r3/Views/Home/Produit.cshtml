@@ -53,11 +53,12 @@
         </tr>
     }
 </table>
+<p/>
 @Html.ActionLink("voir", "GetCommande", new { CommandeID = @ViewData["CID"] })
+@*
+Bouton qui ne revoit pas CommandeID
 @using (Html.BeginForm("GetCommande", "Home", new { CommandeID = @ViewData["CID"] }, FormMethod.Get))
 {
-    <p>
-        <input type="submit" value="Afficher commande" />
-    </p>
+    <input type="submit" value="Afficher commande" />
     <p class="message-error">@ViewBag.error</p>
-}
+}*@

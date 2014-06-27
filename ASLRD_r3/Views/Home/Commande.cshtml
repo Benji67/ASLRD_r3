@@ -45,7 +45,7 @@
             @Html.DisplayFor(modelItem => item.commandeID)
         </td>
         <td>
-            @Html.ActionLink("Supprimer", "RemoveFromPanierTMP", new { id = item.detailcommandetmpID })
+            @Html.ActionLink("Supprimer", "RemoveFromPanierTMP", new { detailcommandetmpID = item.detailcommandetmpID })
         </td>
     </tr>
 }

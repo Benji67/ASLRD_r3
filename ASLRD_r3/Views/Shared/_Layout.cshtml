@@ -4,10 +4,11 @@
         <meta charset="utf-8" />
         <title>@ViewBag.Title - ASLRD</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link rel="stylesheet" href="~/Content/Site.css">
         <link rel="stylesheet" href="~/Content/themes/base/jquery.ui.autocomplete.css">
         <meta name="viewport" content="width=device-width" />
         <script src="//code.jquery.com/jquery-1.8.2.js"></script>
-        <script src="//code.jquery.com/ui/1.8.24/jquery-ui.js"></script>0
+        <script src="//code.jquery.com/ui/1.8.24/jquery-ui.js"></script>
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
     </head>
@@ -17,17 +18,13 @@
                 <div class="float-left">
                     <a href="@Url.Action("AdresseAC", "Home")" class="site-logo"></a>
                 </div>
-                <div class="float-right">
-                    <section id="login">
+                <div class="float-right">                   
+                    <ul id="menu">
                         @Html.Partial("_LoginPartial")
-                    </section>
-                    <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("Adresse", "AdresseAC", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        </ul>
-                    </nav>
+                        <li>@Html.ActionLink("Adresse", "AdresseAC", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
                 </div>
             </div>
         </header>

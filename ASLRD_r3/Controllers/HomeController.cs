@@ -10,9 +10,10 @@ namespace ASLRD_r3.Controllers
 {
     public class HomeController : Controller
     {
+        // Instancie la base de donnée 
         private DataBaseASLRDEntities db = new DataBaseASLRDEntities();
 
-        // Page adresse simple
+        // Page adresse simple avec la liste de commentaires
         [HandleError]
         public ActionResult AdresseSTD()
         {
@@ -22,7 +23,7 @@ namespace ASLRD_r3.Controllers
             return View(cart.MGetCommentaire());            
         }
 
-        // Page adresse avec AJAX et Autocomplete
+        // Page adresse avec AJAX et un autocomplete avec la liste de commentaires
        [HandleError]
         public ActionResult AdresseAC()
         {
@@ -31,68 +32,71 @@ namespace ASLRD_r3.Controllers
             var cart = ASLRDModels.MGetCart(this.HttpContext);
             return View(cart.MGetCommentaire());  
         }
-        
+
+       // Page restaurant + redirection vers la page "Adresse" si l'on commence par cette page 
         [HandleError]
         public ActionResult Restaurant()
         {
             ViewBag.Message = "Restaurant";
             ViewBag.error = "Vous devez commencer par entrer l'adresse";
             var cart = ASLRDModels.MGetCart(this.HttpContext);
-            return View("Adresse", cart.MGetCommentaire());
+            return View("AdresseAC", cart.MGetCommentaire());
         }
 
+        // Page produit + redirection vers la page "Adresse" si l'on commence par cette page  
         [HandleError]
         public ActionResult Produit()
         {
             ViewBag.Message = "Produit";
             ViewBag.error = "Vous devez commencer par entrer l'adresse";
             var cart = ASLRDModels.MGetCart(this.HttpContext);
-            return View("Adresse", cart.MGetCommentaire());
+            return View("AdresseAC", cart.MGetCommentaire());
         }
 
+        // Page commande + redirection vers la page "Adresse" si l'on commence par cette page  
         [HandleError]
         public ActionResult Commande()
         {
             ViewBag.Message = "Produit";
             ViewBag.error = "Vous devez commencer par entrer l'adresse";
             var cart = ASLRDModels.MGetCart(this.HttpContext);
-            return View("Adresse", cart.MGetCommentaire());
+            return View("AdresseAC", cart.MGetCommentaire());
         }
 
+        // Page "A propos de"
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";
             return View();
         }
 
+        // Page de contact
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
             return View();
         }
 
-        //liste des restaurants en fonction de la ville
+        //liste de restaurant en fonction de la ville
         [HttpGet]
         [HandleError]
         public ActionResult GetRestaurant(string CityName)
         {
-           
             var cart = ASLRDModels.MGetCart(this.HttpContext);
             var listerestaurant = cart.MGetRestaurant(CityName);
             var listcommentaire = cart.MGetCommentaire();
             ViewData["CID"] = cart.MAddCommande();
-            //ViewData["SessionID"] = cart.MGetCartId(this.HttpContext);
             if (string.IsNullOrEmpty(CityName))
             {
                 ViewBag.error = "Erreur, entrer une ville (exemple: Strasbourg)";
-                return View("Adresse", listcommentaire);
+                return View("AdresseAC", listcommentaire);
             }
             else
             {
                 if (listerestaurant.FirstOrDefault() == null)
                 {
                     ViewBag.error = "Erreur, entrer une ville existante ou cette ville est non référencé (exemple: Strasbourg)";
-                    return View("Adresse", listcommentaire);
+                    return View("AdresseAC", listcommentaire);
                 }
                 else
                 {
@@ -101,7 +105,7 @@ namespace ASLRD_r3.Controllers
             }
         }
 
-        //liste des produit pour un restaurant
+        //liste de produit pour un restaurant
         [HttpGet]
         [HandleError]
         public ActionResult GetProduit(int RestaurantID, int CommandeID)
@@ -119,8 +123,8 @@ namespace ASLRD_r3.Controllers
                 return View("Produit", listeproduit);
             }
         }
-             
-        //Ajouter un produit au panier 
+
+        //Ajoute un produit au panier temporaire ( panier temporaire -> utilisé si le client n'est pas authentifié)
         [HttpGet]
         [HandleError]
         public ActionResult AddToPanierTMP(produit Produit, int RestaurantID, int CommandeID)
@@ -130,39 +134,23 @@ namespace ASLRD_r3.Controllers
             return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
         }
 
-        //Supprimer un produit du panier temporaire
+        //Supprime un produit du panier temporaire ( panier temporaire -> utilisé si le client n'est pas authentifié)
         [HttpGet]
         [HandleError]
-        public ActionResult RemoveFromPanierTMP(int ProduitID)
+        public ActionResult RemoveFromPanierTMP(int DetailCommandetmpID)
         {
-            // GET Session info
             var cart = ASLRDModels.MGetCart(this.HttpContext);
-            // LIST of detail commande avec le sessionID and le produit a supprimer
-            cart.MRemoveFromPanierTMP(ProduitID, cart.MGetCartId(this.HttpContext));
+            cart.MRemoveFromPanierTMP(DetailCommandetmpID, cart.MGetCartId(this.HttpContext));
             return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
         }
-
-        //Supprimer un produit du panier
-        [HttpGet]
-        [HandleError]
-        public ActionResult RemoveFromPanier(int ProduitID)
-        {
-            // GET Session info
-            var cart = ASLRDModels.MGetCart(this.HttpContext);
-            cart.MRemoveFromPanier(ProduitID, cart.MGetCartId(this.HttpContext));
-            return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
-        }        
-
-        //Affiche le panier
+        
+        //Affiche la commande avec les différents produits du panier temporaire
         [HttpGet]
         [HandleError]
         public ActionResult GetCommande(int CommandeID)
-        {            
-            // GET Session info
-            var cart = ASLRDModels.MGetCart(this.HttpContext);    
-            // LISTE la commande
+        {     
+            var cart = ASLRDModels.MGetCart(this.HttpContext); 
             var listedetailcommandetmp = cart.GetCommandeTMP(CommandeID, cart.MGetCartId(this.HttpContext));
-            // SI il n'y rien dans le panier
             if (listedetailcommandetmp.FirstOrDefault() == null)
             {
                 // SI le panier est vide

@@ -1,4 +1,5 @@
 ﻿using ASLRD_r3.DAL;
+using ASLRD_r3.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,28 +10,21 @@ namespace ASLRD_r3.Controllers
 {
     public class SharedController : Controller
     {
+        // Instancie la base de donnée 
         private DataBaseASLRDEntities db = new DataBaseASLRDEntities();
 
-        public ActionResult Index()
+        public ActionResult Error()
         {
             return View();
         }
 
-        [HandleError(View = "Error")]
+        // Liste des commentaires pour la vue partiel
+        [HandleError]
         [HttpGet]
         public ActionResult _Commentaire()
         {
-            var listecommentaire = (from c in db.commentaire
-                                    select c).ToList();
-
-            if (listecommentaire.FirstOrDefault() == null)
-            {
-                return PartialView();
-            }
-            else
-            {
-                return PartialView(listecommentaire);
-            }
+            var cart = ASLRDModels.MGetCart(this.HttpContext);
+            return PartialView(cart.MGetCommentaire());
         }
 
     }
