@@ -11,7 +11,7 @@ namespace ASLRD_r3.Controllers
     public class SharedController : Controller
     {
         // Instancie la base de donnée 
-        private DataBaseASLRDEntities db = new DataBaseASLRDEntities();
+        private DataBaseASLRD2Entities db = new DataBaseASLRD2Entities();
 
         public ActionResult Error()
         {

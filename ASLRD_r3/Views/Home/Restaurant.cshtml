@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     string cityname = Request.Params["cityname"];
 }
-
-<br />
-<h2>Liste des restaurants pour la ville de @cityname</h2>
-
+<p>
+<h2>Liste des restaurants</h2>
+<h3>Ville: <a href="@Url.Action("GetRestaurant", "Home", new { cityname = @cityname })">@cityname</a></h3>
+<p/>
 <table id="grid-restaurant">
     <tr>
         <th>
@@ -34,7 +34,7 @@
                 @Html.DisplayFor(modelItem => item.genre)
             </td>
             <td>
-                @Html.ActionLink("La carte", "GetProduit", new { restaurantID = @item.restaurantID, restaurantname = @item.nom, cityname = @cityname, CommandeID = @ViewData["CID"] }, null)
+                @Html.ActionLink("La carte", "GetProduit", new { restaurantID = @item.restaurantID, restaurantname = @item.nom, cityname = @cityname}, null)
             </td>
         </tr>
     }

@@ -2,14 +2,22 @@
 
 @{
     ViewBag.Title = "Produit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";    
     string cityname = Request.Params["cityname"];
     string restaurantname = Request.Params["restaurantname"];
+    string restaurantID = Request.Params["restaurantID"];
+    var myNumberList = new List<SelectListItem>
+    {
+        new SelectListItem {Text = "1", Value = "1"},
+        new SelectListItem {Text = "2", Value = "2"},
+        new SelectListItem {Text = "3", Value = "3"}
+    };
+    ViewBag.DropDownData = myNumberList;
 }
-
-<br />
-<h2>Liste des produits pour @restaurantname de <a href="@Url.Action("GetRestaurant", "Home", new { cityname = @cityname })">@cityname</a></h2>
-
+<p>
+<h2>Liste des produits</h2>
+<h3>Restaurant: <a href="@Url.Action("GetProduit", "Home", new { restaurantID = @restaurantID, restaurantname = @restaurantname, cityname = @cityname })">@restaurantname</a> | Ville: <a href="@Url.Action("GetRestaurant", "Home", new { cityname = @cityname })">@cityname</a></h3>
+<p/>  
 <table>
     <tr>
         <th>
@@ -48,17 +56,14 @@
                 @Html.DisplayFor(modelItem => item.reduction)
             </td>
             <td>
-                @Html.ActionLink("Ajouter", "AddToPanierTMP", new { produitID = @item.produitID, restaurantID = @item.restaurantID, CommandeID = @ViewData["CID"] })
+                @Html.DropDownListFor(modelItem => item.reduction, ViewBag.DropDownData as List<SelectListItem>)
+            </td>
+            <td>
+                @Html.ActionLink("Ajouter", "AddToPanierTMP", new { produitID = @item.produitID, restaurantID = @item.restaurantID })
             </td>
         </tr>
     }
 </table>
+<p class="message-error">@ViewBag.error</p>
 <p/>
-@Html.ActionLink("voir", "GetCommande", new { CommandeID = @ViewData["CID"] })
-@*
-Bouton qui ne revoit pas CommandeID
-@using (Html.BeginForm("GetCommande", "Home", new { CommandeID = @ViewData["CID"] }, FormMethod.Get))
-{
-    <input type="submit" value="Afficher commande" />
-    <p class="message-error">@ViewBag.error</p>
-}*@
+@Html.ActionLink("VOIR la commande", "GetCommandeTMP", new { restaurantID = @restaurantID, restaurantname = @restaurantname, cityname = @cityname}, new {type = "button" })

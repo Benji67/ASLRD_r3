@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e52e262ec9d243fdbe618a692f6df23b" Name="Diagram1">
+        <EntityTypeShape EntityType="DataBaseASLRD2Model.adresse" Width="1.5" PointX="3" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataBaseASLRD2Model.client" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataBaseASLRD2Model.commande" Width="1.5" PointX="6" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataBaseASLRD2Model.commentaire" Width="1.5" PointX="5.25" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataBaseASLRD2Model.detailcommande" Width="1.5" PointX="8.25" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataBaseASLRD2Model.detailcommandetmp" Width="1.5" PointX="5.25" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataBaseASLRD2Model.ingredient" Width="1.5" PointX="7.5" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataBaseASLRD2Model.menu" Width="1.5" PointX="3" PointY="26.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataBaseASLRD2Model.ouverture" Width="1.5" PointX="3" PointY="30.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataBaseASLRD2Model.produit" Width="1.5" PointX="5.25" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DataBaseASLRD2Model.restaurant" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_adresse1" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_adresse2" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_commentaire_client1" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_detailcommande1" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_detailcommande3" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_detailcommandetmp2" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_commentaire_client2" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_commentaire_client3" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_commentaire_restaurant" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_detailcommande2" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_detailcommande4" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_detailcommande5" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_detailcommandetmp1" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_detailcommandetmp3" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_detailcommandetmp4" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_menu" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_ouverture" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.FK_produit" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.ingredient_produit" ManuallyRouted="false" />
+        <AssociationConnector Association="DataBaseASLRD2Model.menu_produit" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

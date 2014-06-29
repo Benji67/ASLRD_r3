@@ -187,52 +187,52 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="DAL\adresse.cs">
-      <DependentUpon>DataBaseASLRD.tt</DependentUpon>
+      <DependentUpon>DataBaseASLRD2.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\client.cs">
-      <DependentUpon>DataBaseASLRD.tt</DependentUpon>
+      <DependentUpon>DataBaseASLRD2.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\commande.cs">
-      <DependentUpon>DataBaseASLRD.tt</DependentUpon>
+      <DependentUpon>DataBaseASLRD2.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\commentaire.cs">
-      <DependentUpon>DataBaseASLRD.tt</DependentUpon>
+      <DependentUpon>DataBaseASLRD2.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\DataBaseASLRD.Context.cs">
+    <Compile Include="DAL\DataBaseASLRD2.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DataBaseASLRD.Context.tt</DependentUpon>
+      <DependentUpon>DataBaseASLRD2.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\DataBaseASLRD.cs">
+    <Compile Include="DAL\DataBaseASLRD2.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DataBaseASLRD.tt</DependentUpon>
+      <DependentUpon>DataBaseASLRD2.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\DataBaseASLRD.Designer.cs">
+    <Compile Include="DAL\DataBaseASLRD2.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DataBaseASLRD.edmx</DependentUpon>
+      <DependentUpon>DataBaseASLRD2.edmx</DependentUpon>
     </Compile>
     <Compile Include="DAL\detailcommande.cs">
-      <DependentUpon>DataBaseASLRD.tt</DependentUpon>
+      <DependentUpon>DataBaseASLRD2.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\detailcommandetmp.cs">
-      <DependentUpon>DataBaseASLRD.tt</DependentUpon>
+      <DependentUpon>DataBaseASLRD2.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\ingredient.cs">
-      <DependentUpon>DataBaseASLRD.tt</DependentUpon>
+      <DependentUpon>DataBaseASLRD2.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\menu.cs">
-      <DependentUpon>DataBaseASLRD.tt</DependentUpon>
+      <DependentUpon>DataBaseASLRD2.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\ouverture.cs">
-      <DependentUpon>DataBaseASLRD.tt</DependentUpon>
+      <DependentUpon>DataBaseASLRD2.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\produit.cs">
-      <DependentUpon>DataBaseASLRD.tt</DependentUpon>
+      <DependentUpon>DataBaseASLRD2.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\restaurant.cs">
-      <DependentUpon>DataBaseASLRD.tt</DependentUpon>
+      <DependentUpon>DataBaseASLRD2.tt</DependentUpon>
     </Compile>
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -303,22 +303,22 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <EntityDeploy Include="DAL\DataBaseASLRD.edmx">
+    <EntityDeploy Include="DAL\DataBaseASLRD2.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DataBaseASLRD.Designer.cs</LastGenOutput>
+      <LastGenOutput>DataBaseASLRD2.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="DAL\DataBaseASLRD.Context.tt">
+    <Content Include="DAL\DataBaseASLRD2.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DataBaseASLRD.edmx</DependentUpon>
-      <LastGenOutput>DataBaseASLRD.Context.cs</LastGenOutput>
+      <DependentUpon>DataBaseASLRD2.edmx</DependentUpon>
+      <LastGenOutput>DataBaseASLRD2.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DAL\DataBaseASLRD.edmx.diagram">
-      <DependentUpon>DataBaseASLRD.edmx</DependentUpon>
+    <Content Include="DAL\DataBaseASLRD2.edmx.diagram">
+      <DependentUpon>DataBaseASLRD2.edmx</DependentUpon>
     </Content>
-    <Content Include="DAL\DataBaseASLRD.tt">
+    <Content Include="DAL\DataBaseASLRD2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DataBaseASLRD.edmx</DependentUpon>
-      <LastGenOutput>DataBaseASLRD.cs</LastGenOutput>
+      <DependentUpon>DataBaseASLRD2.edmx</DependentUpon>
+      <LastGenOutput>DataBaseASLRD2.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\logo.png" />

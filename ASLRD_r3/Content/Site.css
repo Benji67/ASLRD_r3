@@ -500,3 +500,15 @@ thead
     padding: 10em 0em 10em 0em;
     border: 0 none;
 }
+
+a[type="button"] {
+    background-color: #d3dce0;
+    border: 1px solid #787878;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 600;
+    padding: 7px;
+    margin-right: 8px;
+    width: auto;
+    text-decoration: none;
+}

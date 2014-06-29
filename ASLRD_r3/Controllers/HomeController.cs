@@ -9,10 +9,7 @@ using ASLRD_r3.Models;
 namespace ASLRD_r3.Controllers
 {
     public class HomeController : Controller
-    {
-        // Instancie la base de donnée 
-        private DataBaseASLRDEntities db = new DataBaseASLRDEntities();
-
+    {    
         // Page adresse simple avec la liste de commentaires
         [HandleError]
         public ActionResult AdresseSTD()
@@ -46,7 +43,7 @@ namespace ASLRD_r3.Controllers
         // Page produit + redirection vers la page "Adresse" si l'on commence par cette page  
         [HandleError]
         public ActionResult Produit()
-        {
+        {           
             ViewBag.Message = "Produit";
             ViewBag.error = "Vous devez commencer par entrer l'adresse";
             var cart = ASLRDModels.MGetCart(this.HttpContext);
@@ -85,7 +82,6 @@ namespace ASLRD_r3.Controllers
             var cart = ASLRDModels.MGetCart(this.HttpContext);
             var listerestaurant = cart.MGetRestaurant(CityName);
             var listcommentaire = cart.MGetCommentaire();
-            ViewData["CID"] = cart.MAddCommande();
             if (string.IsNullOrEmpty(CityName))
             {
                 ViewBag.error = "Erreur, entrer une ville (exemple: Strasbourg)";
@@ -105,12 +101,24 @@ namespace ASLRD_r3.Controllers
             }
         }
 
+        // Retourne la liste de ville pour l'autocomplete de la page adresse avec JS 
+        public JsonResult AAutoComplete(string term)
+        {
+            // Instancie la base de donnée 
+            DataBaseASLRD2Entities db = new DataBaseASLRD2Entities();
+            //var cart = ASLRD2Models.MGetCart(this.HttpContext);
+            //var listedetailcommandetmp = cart.MGetVille(term);
+            var result = (from a in db.adresse
+                          where a.ville.ToUpper().Contains(term.ToUpper())
+                          select new { a.ville }).Distinct();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         //liste de produit pour un restaurant
         [HttpGet]
         [HandleError]
-        public ActionResult GetProduit(int RestaurantID, int CommandeID)
+        public ActionResult GetProduit(int RestaurantID)
         {
-            ViewData["CID"] = CommandeID;
             var cart = ASLRDModels.MGetCart(this.HttpContext);
             var listeproduit = cart.MGetProduit(RestaurantID);
             if (listeproduit.FirstOrDefault() == null)
@@ -123,55 +131,66 @@ namespace ASLRD_r3.Controllers
                 return View("Produit", listeproduit);
             }
         }
-
+               
         //Ajoute un produit au panier temporaire ( panier temporaire -> utilisé si le client n'est pas authentifié)
         [HttpGet]
         [HandleError]
-        public ActionResult AddToPanierTMP(produit Produit, int RestaurantID, int CommandeID)
+        public ActionResult AddToPanierTMP(int ProduitID, int RestaurantID)
         {           
             var cart = ASLRDModels.MGetCart(this.HttpContext);
-            cart.MAddToPanierTMP(Produit, RestaurantID, CommandeID, cart.MGetCartId(this.HttpContext));
+            cart.MAddToPanierTMP(ProduitID, RestaurantID, cart.MGetCartId(this.HttpContext));
             return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
         }
 
         //Supprime un produit du panier temporaire ( panier temporaire -> utilisé si le client n'est pas authentifié)
         [HttpGet]
         [HandleError]
-        public ActionResult RemoveFromPanierTMP(int DetailCommandetmpID)
+        public ActionResult RemoveFromPanierTMP(int DetailCommandeID)
         {
             var cart = ASLRDModels.MGetCart(this.HttpContext);
-            cart.MRemoveFromPanierTMP(DetailCommandetmpID, cart.MGetCartId(this.HttpContext));
+            cart.MRemoveFromPanierTMP(DetailCommandeID, cart.MGetCartId(this.HttpContext));
             return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
         }
         
         //Affiche la commande avec les différents produits du panier temporaire
         [HttpGet]
         [HandleError]
-        public ActionResult GetCommande(int CommandeID)
+        public ActionResult GetCommandeTMP()
         {     
             var cart = ASLRDModels.MGetCart(this.HttpContext); 
-            var listedetailcommandetmp = cart.GetCommandeTMP(CommandeID, cart.MGetCartId(this.HttpContext));
+            var listedetailcommandetmp = cart.MGetCommandeTMP(cart.MGetCartId(this.HttpContext));
             if (listedetailcommandetmp.FirstOrDefault() == null)
             {
-                // SI le panier est vide
-                // AFFICHER la page Produit avec un message d'erreur
-                ViewBag.error = "la commande est vide";
-                return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
+                ViewBag.error = "La commande est vide";
+                return View("Commande", listedetailcommandetmp);
             }
             else
             {
                 // AFFICHER la liste des produits
                 return View("Commande", listedetailcommandetmp);
-            }           
+            }
+            
         }
 
-        // Retourne la liste de ville pour l'autocomplete de la page adresse avec AJAX 
-        public JsonResult AAutoComplete(string term)
+        //Valide la commande
+        [HttpGet]
+        [HandleError]
+        public ActionResult GetFinish()
         {
-            var result = (from a in db.adresse
-                          where a.ville.ToLower().Contains(term.ToLower())
-                          select new { a.ville }).Distinct();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            var cart = ASLRDModels.MGetCart(this.HttpContext);
+            var listedetailcommandetmp = cart.MGetCommandeTMP(cart.MGetCartId(this.HttpContext));
+            if (cart.MGetRegister(cart.MGetCartId(this.HttpContext)) == true)
+            {
+                ViewBag.error = "PERDU aussi";
+                return View("Commande", listedetailcommandetmp);
+            }
+            else
+            {
+                ViewBag.error = "Vous devez vous connecter";
+                return View("Commande", listedetailcommandetmp);
+            }
+
         }
+
     }
 }
