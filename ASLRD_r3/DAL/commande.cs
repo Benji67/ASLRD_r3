@@ -11,6 +11,8 @@ namespace ASLRD_r3.DAL
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class commande
     {
@@ -19,12 +21,19 @@ namespace ASLRD_r3.DAL
             this.detailcommande = new HashSet<detailcommande>();
             this.detailcommandetmp = new HashSet<detailcommandetmp>();
         }
-    
+
+        [DisplayName("N° commande")]
         public int commandeID { get; set; }
+        [DisplayName("Prix total")]
         public decimal prixtotal { get; set; }
+        [DisplayName("Frais de livraison")]
         public Nullable<decimal> fraisdelivraison { get; set; }
+        [DisplayName("Réduction")]
         public Nullable<double> reduction { get; set; }
+        [DisplayName("Date de la commade")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public System.DateTime datecommande { get; set; }
+        [DisplayName("Etat de la commande")]
         public string etatcommande { get; set; }
     
         public virtual ICollection<detailcommande> detailcommande { get; set; }

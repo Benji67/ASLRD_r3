@@ -29,11 +29,14 @@
         <th>
             @Html.DisplayNameFor(model => model.description)
         </th>
-        <th>
+        <!--<th>
             @Html.DisplayNameFor(model => model.delais)
-        </th>
+        </th>-->
         <th>
             @Html.DisplayNameFor(model => model.reduction)
+        </th>
+        <th>
+            Quantitée
         </th>
         <th></th>
     </tr>
@@ -49,17 +52,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.description)
             </td>
-            <td>
+            <!--<td>
                 @Html.DisplayFor(modelItem => item.delais)
-            </td>
+            </td>-->
             <td>
                 @Html.DisplayFor(modelItem => item.reduction)
             </td>
             <td>
-                @Html.DropDownListFor(modelItem => item.reduction, ViewBag.DropDownData as List<SelectListItem>)
+                @Html.DropDownListFor(modelItem => item.reduction, ViewBag.DropDownData as List<SelectListItem>, new { @id = "QuantityDropList" })
             </td>
             <td>
-                @Html.ActionLink("Ajouter", "AddToPanierTMP", new { produitID = @item.produitID, restaurantID = @item.restaurantID })
+                @Html.ActionLink("Ajouter", "AddToPanierTMP", new { produitID = @item.produitID, restaurantID = @item.restaurantID, Quantity = 1 })
             </td>
         </tr>
     }

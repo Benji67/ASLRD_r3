@@ -11,17 +11,29 @@ namespace ASLRD_r3.DAL
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class detailcommandetmp
     {
+        [DisplayName("N° ligne commande")]
         public int detailcommandeID { get; set; }
+        [DisplayName("Quantité")]
         public int quantitee { get; set; }
+        [DisplayName("Réduction")]
         public Nullable<double> reduction { get; set; }
+        [DisplayName("Date")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public System.DateTime datedetailcommande { get; set; }
+        [DisplayName("N° de session")]
         public string sessionID { get; set; }
+        [DisplayName("Restaurant")]
         public int restaurantID { get; set; }
+        [DisplayName("Commande")]
         public Nullable<int> commandeID { get; set; }
+         [DisplayName("Produit")]
         public Nullable<int> produitID { get; set; }
+        [DisplayName("Menu")]
         public Nullable<int> menuID { get; set; }
     
         public virtual commande commande { get; set; }

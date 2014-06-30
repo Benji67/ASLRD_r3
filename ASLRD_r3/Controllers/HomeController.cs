@@ -135,10 +135,10 @@ namespace ASLRD_r3.Controllers
         //Ajoute un produit au panier temporaire ( panier temporaire -> utilisé si le client n'est pas authentifié)
         [HttpGet]
         [HandleError]
-        public ActionResult AddToPanierTMP(int ProduitID, int RestaurantID)
+        public ActionResult AddToPanierTMP(int ProduitID, int RestaurantID, int Quantity)
         {           
             var cart = ASLRDModels.MGetCart(this.HttpContext);
-            cart.MAddToPanierTMP(ProduitID, RestaurantID, cart.MGetCartId(this.HttpContext));
+            cart.MAddToPanierTMP(ProduitID, RestaurantID, cart.MGetCartId(this.HttpContext), Quantity);
             return Redirect(HttpContext.Request.UrlReferrer.AbsoluteUri);
         }
 
@@ -181,7 +181,7 @@ namespace ASLRD_r3.Controllers
             var listedetailcommandetmp = cart.MGetCommandeTMP(cart.MGetCartId(this.HttpContext));
             if (cart.MGetRegister(cart.MGetCartId(this.HttpContext)) == true)
             {
-                ViewBag.error = "PERDU aussi";
+                ViewBag.error = "Vous etes connecté... mais...";
                 return View("Commande", listedetailcommandetmp);
             }
             else

@@ -4,7 +4,7 @@
     ViewBag.Title = "Rechercher";
     Layout = "~/Views/Shared/_Layout.cshtml";    
 }
-<br />
+<p />
 <h2>@ViewBag.Title votre restaurant</h2>
 
 @using (Html.BeginForm("GetRestaurant", "Home", new { cityname = "ville" }, FormMethod.Get))

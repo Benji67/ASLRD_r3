@@ -11,6 +11,7 @@ namespace ASLRD_r3.DAL
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
     public partial class restaurant
     {
@@ -24,14 +25,22 @@ namespace ASLRD_r3.DAL
             this.ouverture = new HashSet<ouverture>();
             this.produit = new HashSet<produit>();
         }
-    
+
+        [DisplayName("N du restaurant")]
         public int restaurantID { get; set; }
+        [DisplayName("Adresse mail")]
         public string email { get; set; }
+        [DisplayName("Mot de passe")]
         public string motdepasse { get; set; }
+        [DisplayName("Nom")]
         public string nom { get; set; }
+        [DisplayName("Téléphone")]
         public Nullable<int> telephone { get; set; }
+        [DisplayName("Status")]
         public string status { get; set; }
+        [DisplayName("Genre")]
         public string genre { get; set; }
+        [DisplayName("N siret")]
         public string nsiret { get; set; }
     
         public virtual ICollection<adresse> adresse { get; set; }

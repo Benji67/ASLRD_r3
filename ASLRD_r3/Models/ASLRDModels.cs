@@ -143,12 +143,12 @@ namespace ASLRD_r3.Models
         }
 
         //Ajoute un produit au panier  temporaire ( panier temporaire -> utilisé si le client n'est pas authentifié)   
-        public void MAddToPanierTMP(int ProduitID, int RestaurantID, string SessionID)
+        public void MAddToPanierTMP(int ProduitID, int RestaurantID, string SessionID, int Q)
         {
             var commandedetailtmpItem = new detailcommandetmp
             {
                 //detailcommandeID = "",
-                quantitee = 1,
+                quantitee = Q,
                 //reduction = "1,2",
                 datedetailcommande = DateTime.Now,
                 sessionID = SessionID,

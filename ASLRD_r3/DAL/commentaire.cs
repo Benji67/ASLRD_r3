@@ -11,16 +11,27 @@ namespace ASLRD_r3.DAL
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class commentaire
     {
+        [DisplayName("N° commentaire")]
         public int commentaireID { get; set; }
+        [DisplayName("Commentaire")]
         public string commentaire1 { get; set; }
+        [DisplayName("Note")]
         public Nullable<int> note { get; set; }
+        [DisplayName("Date")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public System.DateTime datecommentaire { get; set; }
+        [DisplayName("Restaurant")]
         public Nullable<int> restaurantID { get; set; }
+        [DisplayName("Client")]
         public string clientID { get; set; }
+        [DisplayName("Produit")]
         public Nullable<int> produitID { get; set; }
+        [DisplayName("Menu")]
         public Nullable<int> menuID { get; set; }
     
         public virtual client client { get; set; }

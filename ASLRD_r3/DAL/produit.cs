@@ -11,6 +11,7 @@ namespace ASLRD_r3.DAL
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
     public partial class produit
     {
@@ -22,13 +23,20 @@ namespace ASLRD_r3.DAL
             this.ingredient = new HashSet<ingredient>();
             this.menu = new HashSet<menu>();
         }
-    
+
+        [DisplayName("N° produit")]
         public int produitID { get; set; }
+        [DisplayName("Nom")]
         public string nom { get; set; }
+        [DisplayName("Prix")]
         public decimal prixproduit { get; set; }
+        [DisplayName("Description")]
         public string description { get; set; }
+        [DisplayName("Délais")]
         public Nullable<System.TimeSpan> delais { get; set; }
+        [DisplayName("Réduction")]
         public Nullable<double> reduction { get; set; }
+        [DisplayName("Restaurant")]
         public int restaurantID { get; set; }
     
         public virtual ICollection<commentaire> commentaire { get; set; }

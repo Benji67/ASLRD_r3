@@ -11,14 +11,21 @@ namespace ASLRD_r3.DAL
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     
     public partial class adresse
     {
+        [DisplayName("N° adresse")]
         public int adresseID { get; set; }
+        [DisplayName("Ville")]
         public string ville { get; set; }
+        [DisplayName("Nom de la rue")]
         public string rue { get; set; }
+        [DisplayName("Code postal")]
         public int codepostal { get; set; }
+        [DisplayName("Client")]
         public string clientID { get; set; }
+        [DisplayName("Restaurant")]
         public Nullable<int> restaurantID { get; set; }
     
         public virtual client client { get; set; }
